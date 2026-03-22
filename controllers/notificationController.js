@@ -2,10 +2,40 @@ import Notification from '../models/Notification.js';
 
 export const getNotifications = async (req, res) => {
   try {
-    const notifications = await Notification.find({}).sort({ createdAt: -1 });
+    const notifications = await Notification.find({ clearedBy: { $ne: req.user._id } }).sort({ createdAt: -1 });
     res.json(notifications);
   } catch (error) {
     res.status(500).json({ message: 'Failed to get notifications' });
+  }
+};
+
+export const markNotificationsAsRead = async (req, res) => {
+  try {
+    // Mark all notifications not yet read by this user as read by pushing user ID
+    await Notification.updateMany(
+      { readBy: { $ne: req.user._id } },
+      { $push: { readBy: req.user._id } }
+    );
+    res.json({ message: 'Notifications marked as read' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to mark notifications as read' });
+  }
+};
+
+export const clearNotificationForUser = async (req, res) => {
+  try {
+    const notification = await Notification.findById(req.params.id);
+    if (notification) {
+      if (!notification.clearedBy.includes(req.user._id)) {
+        notification.clearedBy.push(req.user._id);
+        await notification.save();
+      }
+      res.json({ message: 'Notification cleared for user' });
+    } else {
+      res.status(404).json({ message: 'Notification not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to clear notification' });
   }
 };
 
