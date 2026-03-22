@@ -3,6 +3,7 @@ import KuppiVideo from '../models/KuppiVideo.js';
 import PastpaperDiscussion from '../models/PastpaperDiscussion.js';
 import ZoomLink from '../models/ZoomLink.js';
 import Subject from '../models/Subject.js';
+import mongoose from 'mongoose';
 
 // Helper: Resolve model by type
 const getModel = (type) => {
@@ -22,6 +23,11 @@ export const getResources = async (req, res) => {
   try {
     const Model = getModel(req.params.type);
     if (!Model) return res.status(400).json({ message: 'Invalid resource type' });
+
+    if (req.params.subjectId && !mongoose.Types.ObjectId.isValid(req.params.subjectId)) {
+      return res.json([]);
+    }
+
     const items = await Model.find({ subjectId: req.params.subjectId }).sort({ order: 1 });
     res.json(items);
   } catch (err) {
