@@ -2,7 +2,7 @@ import express from 'express';
 import { getDepartments, createDepartment, deleteDepartment } from '../controllers/departmentController.js';
 import { getYears, createYear, deleteYear } from '../controllers/yearController.js';
 import { getSemesters, createSemester, deleteSemester } from '../controllers/semesterController.js';
-import { getSubjects, createSubject, deleteSubject } from '../controllers/subjectController.js';
+import { getSubjects, createSubject, deleteSubject, updateSubject } from '../controllers/subjectController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -24,6 +24,8 @@ router.route('/semesters/:id').delete(protect, admin, deleteSemester);
 // Subject Routes
 router.route('/subjects').post(protect, admin, createSubject);
 router.route('/subjects/:semesterId').get(protect, getSubjects);
-router.route('/subjects/:id').delete(protect, admin, deleteSubject);
+router.route('/subjects/:id')
+  .delete(protect, admin, deleteSubject)
+  .put(protect, admin, updateSubject);
 
 export default router;

@@ -41,3 +41,21 @@ export const deleteSubject = async (req, res) => {
     res.status(404).json({ message: 'Subject not found' });
   }
 };
+
+// @desc    Update a subject
+// @route   PUT /api/subjects/:id
+// @access  Private/Admin
+export const updateSubject = async (req, res) => {
+  const subject = await Subject.findById(req.params.id);
+
+  if (subject) {
+    subject.subjectName = req.body.subjectName || subject.subjectName;
+    subject.subjectCode = req.body.subjectCode || subject.subjectCode;
+    subject.description = req.body.description || subject.description;
+
+    const updatedSubject = await subject.save();
+    res.json(updatedSubject);
+  } else {
+    res.status(404).json({ message: 'Subject not found' });
+  }
+};
