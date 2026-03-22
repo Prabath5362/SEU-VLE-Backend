@@ -55,6 +55,7 @@ import resourceRoutes from './routes/resourceRoutes.js';
 import progressRoutes from './routes/progressRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
 import announcementRoutes from './routes/announcementRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -64,6 +65,7 @@ app.use('/api/resources', resourceRoutes); // new per-type endpoints
 app.use('/api/progress', progressRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/announcements', announcementRoutes);
+app.use('/api/notifications', notificationRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
