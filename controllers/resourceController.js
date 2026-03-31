@@ -3,6 +3,7 @@ import KuppiVideo from '../models/KuppiVideo.js';
 import PastpaperDiscussion from '../models/PastpaperDiscussion.js';
 import ZoomLink from '../models/ZoomLink.js';
 import Subject from '../models/Subject.js';
+import PastPaper from '../models/PastPaper.js';
 import mongoose from 'mongoose';
 
 // Helper: Resolve model by type
@@ -12,6 +13,7 @@ const getModel = (type) => {
     case 'kuppi_videos': return KuppiVideo;
     case 'pastpaper_discussion': return PastpaperDiscussion;
     case 'zoomlink': return ZoomLink;
+    case 'past_paper': return PastPaper;
     default: return null;
   }
 };
