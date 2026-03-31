@@ -1,5 +1,6 @@
 import LectureNote from '../models/LectureNote.js';
 import KuppiVideo from '../models/KuppiVideo.js';
+import LectureRecording from '../models/LectureRecording.js';
 import PastpaperDiscussion from '../models/PastpaperDiscussion.js';
 import ZoomLink from '../models/ZoomLink.js';
 import Subject from '../models/Subject.js';
@@ -11,6 +12,7 @@ const getModel = (type) => {
   switch (type) {
     case 'lecture_note': return LectureNote;
     case 'kuppi_videos': return KuppiVideo;
+    case 'lecture_recordings': return LectureRecording;
     case 'pastpaper_discussion': return PastpaperDiscussion;
     case 'zoomlink': return ZoomLink;
     case 'past_paper': return PastPaper;
